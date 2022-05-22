@@ -1,7 +1,7 @@
 Array.prototype.myFilter = function (callback) {
   const array = this;
 
-  // check for method called on array or not
+  // check if method called on array or not
   if (!Array.isArray(array)) {
     throw new Error("myFilter is not a function");
   }
