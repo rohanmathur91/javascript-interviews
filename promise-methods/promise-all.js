@@ -1,42 +1,28 @@
-function fakeFetch(message, isReject) {
+Promise.myAll = function (promiseArray) {
   return new Promise((resolve, reject) => {
-    if (isReject) {
-      reject("Promise was rejected by user");
-      return;
+    const result = [];
+    let resolvedPromiseCount = 0;
+
+    for (let i = 0; i < promiseArray.length; i++) {
+      if (promiseArray[i]?.then) {
+        promiseArray[i]
+          .then((data) => {
+            result[i] = data;
+            resolvedPromiseCount++;
+
+            if (resolvedPromiseCount === promiseArray.length) {
+              resolve(result);
+            }
+          })
+          .catch((error) => reject(error));
+      } else {
+        result[i] = promiseArray[i];
+        resolvedPromiseCount++;
+
+        if (resolvedPromiseCount === promiseArray.length) {
+          resolve(result);
+        }
+      }
     }
-    setTimeout(() => resolve(message), 2000);
-  });
-}
-
-// const result = Promise.all([
-//   fakeFetch("promise 1"),
-//   fakeFetch("promise 2"),
-//   fakeFetch("promise 3"),
-// ]);
-
-// // result.then((res) => console.log(res));
-
-Promise.myAll = function (arrayOfPromise) {
-  return new Promise((resolve, reject) => {
-    let output = [];
-    arrayOfPromise.forEach((eachPromise) => {
-      eachPromise
-        .then((response) => {
-          output.push(response);
-          if (output.length === arrayOfPromise.length) {
-            resolve(output);
-          }
-        })
-        .catch((error) => reject(error));
-    });
   });
 };
-
-const result1 = Promise.myAll([
-  fakeFetch("promise 1"),
-  fakeFetch("promise 2"),
-  fakeFetch("promise 3"),
-  fakeFetch("promise 4", true),
-]);
-
-result1.then((res) => console.log(res)).catch((err) => console.log(err));
