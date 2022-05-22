@@ -1,5 +1,3 @@
-const array = [[[1, 2], [[3, [10, [20]]]]], 4];
-
 function flattenArray(array, depth = 1) {
   const temp = [];
   for (const element of array) {
