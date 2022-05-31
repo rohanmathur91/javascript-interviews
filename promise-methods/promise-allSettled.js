@@ -22,14 +22,19 @@ Promise.myAllSettled = function (arrayOfPromise) {
     let output = [];
     arrayOfPromise.forEach((eachPromise) => {
       eachPromise
-        .then(() => {
-          output.push(eachPromise);
-          if (output.length === arrayOfPromise.length) {
-            resolve(output);
-          }
+        .then((value) => {
+          output.push({
+            status: "fulfilled",
+            value,
+          });
         })
-        .catch(() => {
-          output.push(eachPromise);
+        .catch((reason) => {
+          output.push({
+            status: "rejected",
+            reason,
+          });
+        })
+        .finally(() => {
           if (output.length === arrayOfPromise.length) {
             resolve(output);
           }
