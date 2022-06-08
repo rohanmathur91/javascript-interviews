@@ -8,15 +8,6 @@ function fakeFetch(message, isReject) {
   });
 }
 
-// const result = Promise.allSettled([
-//   fakeFetch("promise 1"),
-//   fakeFetch("promise 2"),
-//   fakeFetch("promise 3"),
-//   fakeFetch("promise 3", true),
-// ]);
-
-// result.then((res) => console.log(res)).catch((err) => console.log(err));
-
 Promise.myAllSettled = function (arrayOfPromise) {
   return new Promise((resolve, reject) => {
     let output = [];

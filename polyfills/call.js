@@ -1,6 +1,7 @@
 Function.prototype.myCall = function (thisArg, ...args) {
-  thisArg["random"] = this;
-  const result = thisArg["random"](...args);
-  delete thisArg["random"];
+  const key = Symbol();
+  thisArg[key] = this;
+  const result = thisArg[key](...args);
+  delete thisArg[key];
   return result;
 };
