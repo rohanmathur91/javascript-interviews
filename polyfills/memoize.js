@@ -3,11 +3,10 @@ function memoize(func) {
   return function () {
     const stringifyArgs = JSON.stringify(arguments);
 
-    if (cache[stringifyArgs]) {
-      return cache[stringifyArgs];
+    if (!(stringifyArgs in cache)) {
+      cache[stringifyArgs] = func.apply(this, arguments);
     }
 
-    cache[stringifyArgs] = func.apply(this, arguments);
     return cache[stringifyArgs];
   };
 }
